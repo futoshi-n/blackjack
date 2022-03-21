@@ -17,6 +17,7 @@ namespace SoloLearn
 
             Deck d = new Deck();
             Console.WriteLine(d.CardNo(23));
+            Console.WriteLine(d.CardMark(23));
             // Console.WriteLine(d.card[0].No);
             /*
             Card card =new Card();
@@ -103,10 +104,14 @@ namespace SoloLearn
             }
         }
         
-          public int CardNo(int i)
+          public string CardNo(int i)
           {
-           return card[i].No;
+           return card[i].NoString;
           }
+        public string CardMark(int i)
+        {
+            return card[i].Mark;
+        }
     }
 }
 
