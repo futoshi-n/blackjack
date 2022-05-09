@@ -22,10 +22,10 @@ namespace SoloLearn
            // Console.WriteLine(d.CardMark(23));
 
             card.Add(d.DrawCard());
-            Console.WriteLine(card[0].No);
+            Console.WriteLine(card[0].NoString);
             Console.WriteLine(card[0].Mark);
             card.Add(d.DrawCard());
-            Console.WriteLine(card[1].No);
+            Console.WriteLine(card[1].NoString);
             Console.WriteLine(card[1].Mark);
 
 
@@ -39,6 +39,10 @@ namespace SoloLearn
             Console.ReadLine();
         }
     }
+
+    /// <summary>
+    /// カード
+    /// </summary>
     public class Card
     {
         public string Mark { get; set; }
@@ -96,6 +100,9 @@ namespace SoloLearn
             }
         }
     }
+    /// <summary>
+    /// 山札
+    /// </summary>
     public class Deck
     {
         public List<Card> card;
@@ -130,6 +137,40 @@ namespace SoloLearn
         public string CardMark(int i)
         {
             return card[i].Mark;
+        }
+    }
+
+    abstract class PlayerBase
+    {
+
+
+        private List<Card> card;
+        private int point;
+        private bool burst;
+        public PlayerBase()
+        {
+            card = new List<Card>();
+            point = 0;
+            burst = false;
+
+        }
+
+        public abstract void Draw(Card a);
+        
+        
+
+    }
+
+    class User :PlayerBase
+    {
+        private List<Card> c;
+        public User() :base()
+        {
+            c = new List<Card>();
+        }
+        public override void Draw(Card a)
+        {
+            c.Add(a);
         }
     }
 }
