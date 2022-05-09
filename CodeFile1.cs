@@ -117,7 +117,10 @@ namespace SoloLearn
         }
         public Card DrawCard()
         {
-            return card[0];
+            Card c= new Card();
+            c = card[0];
+            card.RemoveAt(0);
+            return c;
         }
         
           public string CardNo(int i)
