@@ -15,9 +15,20 @@ namespace SoloLearn
         {
             Console.WriteLine("hello");
 
+            List<Card> card = new List<Card>();
+
             Deck d = new Deck();
-            Console.WriteLine(d.CardNo(23));
-            Console.WriteLine(d.CardMark(23));
+          //  Console.WriteLine(d.CardNo(23));
+           // Console.WriteLine(d.CardMark(23));
+
+            card.Add(d.DrawCard());
+            Console.WriteLine(card[0].No);
+            Console.WriteLine(card[0].Mark);
+            card.Add(d.DrawCard());
+            Console.WriteLine(card[1].No);
+            Console.WriteLine(card[1].Mark);
+
+
             // Console.WriteLine(d.card[0].No);
             /*
             Card card =new Card();
@@ -102,6 +113,11 @@ namespace SoloLearn
                     
                 }
             }
+            card = card.OrderBy(a => Guid.NewGuid()).ToList();
+        }
+        public Card DrawCard()
+        {
+            return card[0];
         }
         
           public string CardNo(int i)
