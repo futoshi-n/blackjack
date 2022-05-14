@@ -21,12 +21,17 @@ namespace SoloLearn
           //  Console.WriteLine(d.CardNo(23));
            // Console.WriteLine(d.CardMark(23));
 
-            card.Add(d.DrawCard());
-            Console.WriteLine(card[0].NoString);
-            Console.WriteLine(card[0].Mark);
-            card.Add(d.DrawCard());
-            Console.WriteLine(card[1].NoString);
-            Console.WriteLine(card[1].Mark);
+            User user = new User();
+           // card.Add(d.DrawCard());
+           // Console.WriteLine(card[0].NoString);
+           // Console.WriteLine(card[0].Mark);
+           // Console.ReadLine();
+            user.Draw();
+
+          
+            Console.WriteLine(user.Point);
+            Console.WriteLine();
+            
 
 
             // Console.WriteLine(d.card[0].No);
@@ -103,9 +108,9 @@ namespace SoloLearn
     /// <summary>
     /// 山札
     /// </summary>
-    public class Deck
+    public  class Deck
     {
-        public List<Card> card;
+        public static List<Card> card;
         public Deck()
         {
             string[] marks = new string[] { "ハート", "スペード", "クラブ", "ダイヤ" };
@@ -122,7 +127,7 @@ namespace SoloLearn
             }
             card = card.OrderBy(a => Guid.NewGuid()).ToList();
         }
-        public Card DrawCard()
+        public static Card DrawCard()
         {
             Card c= new Card();
             c = card[0];
@@ -143,19 +148,22 @@ namespace SoloLearn
     abstract class PlayerBase
     {
 
-
-        private List<Card> card;
-        private int point;
-        private bool burst;
-        public PlayerBase()
+        public List<Card> Card { get; set; }
+        public int Point 
         {
-            card = new List<Card>();
-            point = 0;
-            burst = false;
-
+            get {
+                int x=0;
+                foreach (Card c in Card)
+                {
+                    x = c.Point;
+                }
+                return x;
+                }
+        
         }
+        public bool Burst { get; set; }
 
-        public abstract void Draw(Card a);
+        public abstract void Draw();
         
         
 
@@ -163,14 +171,11 @@ namespace SoloLearn
 
     class User :PlayerBase
     {
-        private List<Card> c;
-        public User() :base()
+
+        public override void Draw()
         {
-            c = new List<Card>();
-        }
-        public override void Draw(Card a)
-        {
-            c.Add(a);
+            
+            Card.Add(Deck.DrawCard());
         }
     }
 }
