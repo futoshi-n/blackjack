@@ -148,8 +148,12 @@ namespace SoloLearn
 
     abstract class PlayerBase
     {
-
-        public List<Card> Card { get; set; }
+        List<Card> card = new List<Card>();
+        public List<Card> Card
+        {
+            get { return card; }
+            set { card = value; }
+        }
         public int Point 
         {
             get {
@@ -170,29 +174,10 @@ namespace SoloLearn
 
     }
 
-    class User 
+    class User :PlayerBase
     {
-        List<Card> card = new List<Card>();
-        public List<Card> Card
-        {
-            get { return card; }
-            set { card = value; }
-        }
-        public int Point
-        {
-            get
-            {
-                int x = 0;
-                foreach (Card c in Card)
-                {
-                    x = x+c.Point;
-                }
-                return x;
-            }
 
-        }
-        public bool Burst { get; set; }
-        public void Draw(Card cards)
+        public override void Draw(Card cards)
         {
             
             Card.Add(cards);
