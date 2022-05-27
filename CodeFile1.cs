@@ -22,11 +22,12 @@ namespace SoloLearn
            // Console.WriteLine(d.CardMark(23));
 
             User user = new User();
-           // card.Add(d.DrawCard());
-           // Console.WriteLine(card[0].NoString);
-           // Console.WriteLine(card[0].Mark);
-           // Console.ReadLine();
-            user.Draw();
+            // card.Add(d.DrawCard());
+            // Console.WriteLine(card[0].NoString);
+            // Console.WriteLine(card[0].Mark);
+            // Console.ReadLine();
+            card.Add(Deck.DrawCard());
+            user.Draw(card[0]);
 
           
             Console.WriteLine(user.Point);
@@ -163,19 +164,38 @@ namespace SoloLearn
         }
         public bool Burst { get; set; }
 
-        public abstract void Draw();
+        public abstract void Draw(Card cards);
         
         
 
     }
 
-    class User :PlayerBase
+    class User 
     {
+        List<Card> card = new List<Card>();
+        public List<Card> Card
+        {
+            get { return card; }
+            set { card = value; }
+        }
+        public int Point
+        {
+            get
+            {
+                int x = 0;
+                foreach (Card c in Card)
+                {
+                    x = x+c.Point;
+                }
+                return x;
+            }
 
-        public override void Draw()
+        }
+        public bool Burst { get; set; }
+        public void Draw(Card cards)
         {
             
-            Card.Add(Deck.DrawCard());
+            Card.Add(cards);
         }
     }
 }
