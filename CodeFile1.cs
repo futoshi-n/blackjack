@@ -27,11 +27,27 @@ namespace SoloLearn
             // Console.WriteLine(card[0].Mark);
             // Console.ReadLine();
             card.Add(Deck.DrawCard());
-            user.Draw(card[0]);
+            card.Add(Deck.DrawCard());
+            card.Add(Deck.DrawCard());
+            card.Add(Deck.DrawCard());
+            card.Add(Deck.DrawCard());
+            card.Add(Deck.DrawCard());
+            card.Add(Deck.DrawCard());
+            card.Add(Deck.DrawCard());
 
-          
+            user.Draw(card[0]);
+            user.Draw(card[1]);
+            user.Draw(card[2]);
+            user.Draw(card[3]);
+            user.Draw(card[4]);
+            user.Draw(card[5]);
+            user.Draw(card[6]);
+            user.Draw(card[7]);
+
+
             Console.WriteLine(user.Point);
-            Console.WriteLine();
+            
+            Console.WriteLine(user.Burst);
             
 
 
@@ -152,21 +168,35 @@ namespace SoloLearn
         public List<Card> Card
         {
             get { return card; }
-            set { card = value; }
+            set { Card = value; }
+        
         }
         public int Point 
         {
             get {
                 int x=0;
-                foreach (Card c in Card)
+                foreach (Card c in card)
                 {
-                    x = c.Point;
+                    x += c.Point;
                 }
                 return x;
                 }
         
         }
-        public bool Burst { get; set; }
+        public bool Burst()
+        {
+            
+            int point = 0;
+            for (int i=0; i<card.Count; i++)
+            {
+                point += card[i].Point;
+            }
+            if(point>21)
+                return true;
+
+            return false;
+
+        }
 
         public abstract void Draw(Card cards);
         
@@ -174,13 +204,46 @@ namespace SoloLearn
 
     }
 
-    class User :PlayerBase
+    class User 
     {
+        List<Card> card = new List<Card>();
+        public List<Card> Card
+        {
+            get { return card; }
+            set { Card = value; }
 
-        public override void Draw(Card cards)
+        }
+        public int Point
+        {
+            get
+            {
+                int x = 0;
+                foreach (Card c in card)
+                {
+                    x += c.Point;
+                }
+                return x;
+            }
+
+        }
+        public bool Burst
+        {
+            get{
+                int point = 0;
+                for (int i = 0; i < card.Count; i++)
+                {
+                    point += card[i].Point;
+                }
+                if (point > 21)
+                    return true;
+
+                return false;
+            }
+        }
+        public void Draw(Card cards)
         {
             
-            Card.Add(cards);
+            card.Add(cards);
         }
     }
 }
