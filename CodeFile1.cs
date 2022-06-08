@@ -15,49 +15,29 @@ namespace SoloLearn
         {
             Console.WriteLine("hello");
 
-            List<Card> card = new List<Card>();
 
             Deck d = new Deck();
-          //  Console.WriteLine(d.CardNo(23));
-           // Console.WriteLine(d.CardMark(23));
 
             User user = new User();
-            // card.Add(d.DrawCard());
-            // Console.WriteLine(card[0].NoString);
-            // Console.WriteLine(card[0].Mark);
-            // Console.ReadLine();
-            card.Add(Deck.DrawCard());
-            card.Add(Deck.DrawCard());
-            card.Add(Deck.DrawCard());
-            card.Add(Deck.DrawCard());
-            card.Add(Deck.DrawCard());
-            card.Add(Deck.DrawCard());
-            card.Add(Deck.DrawCard());
-            card.Add(Deck.DrawCard());
+            Dealer dealer = new Dealer();
 
-            user.Draw(card[0]);
-            user.Draw(card[1]);
-            user.Draw(card[2]);
-            user.Draw(card[3]);
-            user.Draw(card[4]);
-            user.Draw(card[5]);
-            user.Draw(card[6]);
-            user.Draw(card[7]);
+            user.Draw(Deck.DrawCard());
+            user.Draw(Deck.DrawCard());
+            user.Draw(Deck.DrawCard());
+
+            dealer.Draw(Deck.DrawCard());
+            dealer.Draw(Deck.DrawCard());
+            dealer.Draw(Deck.DrawCard());
 
 
-            Console.WriteLine(user.Point);
-            
+            Console.WriteLine(user.Point);            
             Console.WriteLine(user.Burst);
-            
+
+            Console.WriteLine(dealer.Point);
+            Console.WriteLine(dealer.Burst);
 
 
-            // Console.WriteLine(d.card[0].No);
-            /*
-            Card card =new Card();
-            card.No =12;
-            Console.WriteLine(card.NoString);
-            Console.WriteLine(card.Point );
-            */
+
             Console.ReadLine();
         }
     }
@@ -144,6 +124,10 @@ namespace SoloLearn
             }
             card = card.OrderBy(a => Guid.NewGuid()).ToList();
         }
+        /// <summary>
+        /// カードを引く
+        /// </summary>
+        /// <returns></returns>
         public static Card DrawCard()
         {
             Card c= new Card();
@@ -203,16 +187,16 @@ namespace SoloLearn
         
 
     }
-
+    /// <summary>
+    /// プレイヤー
+    /// </summary>
     class User 
     {
         List<Card> card = new List<Card>();
-        public List<Card> Card
-        {
-            get { return card; }
-            set { Card = value; }
-
-        }
+ 
+        /// <summary>
+        /// 得点
+        /// </summary>
         public int Point
         {
             get
@@ -226,6 +210,9 @@ namespace SoloLearn
             }
 
         }
+        /// <summary>
+        /// バースト確認
+        /// </summary>
         public bool Burst
         {
             get{
@@ -240,11 +227,19 @@ namespace SoloLearn
                 return false;
             }
         }
+        /// <summary>
+        /// 手札に加える
+        /// </summary>
+        /// <param name="cards"></param>
         public void Draw(Card cards)
         {
             
             card.Add(cards);
         }
+    }
+    class Dealer :User
+    {
+
     }
 }
 
