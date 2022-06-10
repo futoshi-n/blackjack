@@ -241,5 +241,23 @@ namespace SoloLearn
     {
 
     }
+    /// <summary>
+    /// ゲーム
+    /// </summary>
+    class Game
+    {
+        
+        public Game()
+        {
+            Console.WriteLine("ブラックジャックをはじめます。");
+            Console.ReadLine();
+
+            Deck d = new Deck();
+            User user = new User();
+            Dealer dealer = new Dealer();
+
+  
+        }
+    }
 }
 
