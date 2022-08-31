@@ -223,6 +223,23 @@ namespace SoloLearn
     class Dealer :User
     {
         List<Card> card = new List<Card>();
+
+        /// <summary>
+        /// 得点
+        /// </summary>
+        public new int Point
+        {
+            get
+            {
+                int x = 0;
+                foreach (Card c in card)
+                {
+                    x += c.Point;
+                }
+                return x;
+            }
+
+        }
         /// <summary>
         /// 手札に加える
         /// </summary>
@@ -235,8 +252,16 @@ namespace SoloLearn
                 Console.WriteLine("ディーラーの二枚目のカードはわかりません。");
             card.Add(cards);
         }
+        /// <summary>
+        /// 2枚目の確認だけ
+        /// </summary>
+        public void SCard()
+        {
+            Console.WriteLine("ディーラーの二枚目のカードは{0}の{1}でした。", card[1].Mark, card[1].NoString);
+        }
 
     }
+
     /// <summary>
     /// ゲーム
     /// </summary>
@@ -259,23 +284,75 @@ namespace SoloLearn
             dealer.Draw(1, Deck.DrawCard());
 
             DeckQ();
+            DealerDeck();
 
         }
 
+        /// <summary>
+        /// カードを引くか選択
+        /// </summary>
         public void DeckQ()
         {
 
             UserPoint();
             Console.WriteLine("カードを引きますか？引く場合はYを、引かない場合はNを入力してください。");
-            string c = Console.ReadLine();
+            char c = Console.ReadKey().KeyChar;
+            Console.WriteLine();
+            if (c == 'Y' )
+            {
+                user.Draw(Deck.DrawCard());
+                DeckQ();
+            }
+            else if (c == 'N')
+            {
+                return ;
+            }
+
+        }
+        /// <summary>
+        /// ディーラーのターン
+        /// </summary>
+        public void DealerDeck()
+        {
+            bool a =false;
+            dealer.SCard();
+            Console.WriteLine("ディーラーの現在の得点は{0}です。",dealer.Point);
+            while (!a)
+            {
+                if (dealer.Point < 17)
+                {
+                    dealer.Draw(0, Deck.DrawCard());
+                }
+                else
+                {
+                    a = true;
+                }
+            }
+            Console.WriteLine("test");
+            Console.ReadLine();
         }
 
+        /// <summary>
+        /// 得点確認
+        /// </summary>
         public void UserPoint()
         {
             Console.WriteLine("あなたの現在の得点は{0}です。", user.Point);
 
             if (user.Burst)
+            {
                 Console.WriteLine("ディーラーの勝ちです");
+                GameEnd();
+            }
+        }
+        /// <summary>
+        /// ゲーム終了
+        /// </summary>
+        public void GameEnd()
+        {
+            Console.WriteLine("ブラックジャック終了です。");
+            Console.ReadLine();
+            Environment.Exit(0);
         }
         
     }
