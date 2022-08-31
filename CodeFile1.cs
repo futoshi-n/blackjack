@@ -15,26 +15,8 @@ namespace SoloLearn
         {
             Console.WriteLine("hello");
 
+            Game game = new Game();
 
-            Deck d = new Deck();
-
-            User user = new User();
-            Dealer dealer = new Dealer();
-
-            user.Draw(Deck.DrawCard());
-            user.Draw(Deck.DrawCard());
-            user.Draw(Deck.DrawCard());
-
-            dealer.Draw(Deck.DrawCard());
-            dealer.Draw(Deck.DrawCard());
-            dealer.Draw(Deck.DrawCard());
-
-
-            Console.WriteLine(user.Point);            
-            Console.WriteLine(user.Burst);
-
-            Console.WriteLine(dealer.Point);
-            Console.WriteLine(dealer.Burst);
 
 
 
@@ -146,7 +128,7 @@ namespace SoloLearn
         }
     }
 
-    abstract class PlayerBase
+   /* abstract class PlayerBase
     {
         List<Card> card = new List<Card>();
         public List<Card> Card
@@ -186,7 +168,8 @@ namespace SoloLearn
         
         
 
-    }
+    }*/
+
     /// <summary>
     /// プレイヤー
     /// </summary>
@@ -233,12 +216,25 @@ namespace SoloLearn
         /// <param name="cards"></param>
         public void Draw(Card cards)
         {
-            
+            Console.WriteLine("あなたの引いたカードは{0}の{1}です。",cards.Mark,cards.NoString);
             card.Add(cards);
         }
     }
     class Dealer :User
     {
+        List<Card> card = new List<Card>();
+        /// <summary>
+        /// 手札に加える
+        /// </summary>
+        /// <param name="cards"></param>
+        public void Draw(int i, Card cards)
+        {
+            if (i == 0)
+                Console.WriteLine("ディーラーの引いたカードは{0}の{1}です。", cards.Mark, cards.NoString);
+            else if (i == 1)
+                Console.WriteLine("ディーラーの二枚目のカードはわかりません。");
+            card.Add(cards);
+        }
 
     }
     /// <summary>
@@ -246,18 +242,42 @@ namespace SoloLearn
     /// </summary>
     class Game
     {
-        
+        Deck d = new Deck();
+        User user = new User();
+        Dealer dealer = new Dealer();
         public Game()
         {
             Console.WriteLine("ブラックジャックをはじめます。");
             Console.ReadLine();
 
-            Deck d = new Deck();
-            User user = new User();
-            Dealer dealer = new Dealer();
 
-  
+
+            for (int i = 0; i < 2; i++)
+                user.Draw(Deck.DrawCard());
+
+            dealer.Draw(0, Deck.DrawCard());
+            dealer.Draw(1, Deck.DrawCard());
+
+            DeckQ();
+
         }
+
+        public void DeckQ()
+        {
+
+            UserPoint();
+            Console.WriteLine("カードを引きますか？引く場合はYを、引かない場合はNを入力してください。");
+            string c = Console.ReadLine();
+        }
+
+        public void UserPoint()
+        {
+            Console.WriteLine("あなたの現在の得点は{0}です。", user.Point);
+
+            if (user.Burst)
+                Console.WriteLine("ディーラーの勝ちです");
+        }
+        
     }
 }
 
