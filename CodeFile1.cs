@@ -260,6 +260,22 @@ namespace SoloLearn
             Console.WriteLine("ディーラーの二枚目のカードは{0}の{1}でした。", card[1].Mark, card[1].NoString);
         }
 
+        public new bool Burst
+        {
+            get
+            {
+                int point = 0;
+                for (int i = 0; i < card.Count; i++)
+                {
+                    point += card[i].Point;
+                }
+                if (point > 21)
+                    return true;
+
+                return false;
+            }
+        }
+
     }
 
     /// <summary>
@@ -285,6 +301,7 @@ namespace SoloLearn
 
             DeckQ();
             DealerDeck();
+            Judge();
 
         }
 
@@ -328,8 +345,7 @@ namespace SoloLearn
                     a = true;
                 }
             }
-            Console.WriteLine("test");
-            Console.ReadLine();
+
         }
 
         /// <summary>
@@ -345,6 +361,31 @@ namespace SoloLearn
                 GameEnd();
             }
         }
+
+        /// <summary>
+        /// 決着
+        /// </summary>
+        public void Judge()
+        {
+            if (dealer.Burst || user.Point==21)
+            {
+                Console.WriteLine("あなたの勝ちです。");
+                GameEnd();
+            }
+            if (user.Point <= dealer.Point)
+            {
+                Console.WriteLine("ディーラーの勝ちです。");
+                GameEnd();
+            }
+            else if (user.Point > dealer.Point)
+            {
+                Console.WriteLine("あなたの勝ちです。");
+                GameEnd();
+            }
+
+            
+        }
+
         /// <summary>
         /// ゲーム終了
         /// </summary>
